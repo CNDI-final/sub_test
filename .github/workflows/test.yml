@@ -28,6 +28,6 @@ jobs:
           client-payload: >
             {
               "pr_branch": "${{ github.head_ref }}",
-              "pr_sha": "${{ github.event.pull_request.head.sha }}"
+              "pr_sha": "${{ github.event.pull_request.head.sha }}",
               "submodule_name": "sub_test"
             }
