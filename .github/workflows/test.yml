@@ -11,6 +11,14 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Check token
+        run: |
+          if [ -z "${{ secrets.PAT_FOR_DISPATCH }}" ]; then
+            echo "TOKEN IS EMPTY!"
+          else
+            echo "TOKEN FOUND"
+          fi
+
       - name: Trigger Parent Repo Workflow
         uses: peter-evans/repository-dispatch@v3
         with:
