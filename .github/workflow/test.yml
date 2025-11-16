@@ -1,0 +1,32 @@
+# 子 repo: .github/workflows/notify-parent.yml
+# 目的：當有 PR 時，通知主 repo
+
+name: Notify Parent Repo
+on:
+  # 當有 PR 被開啟、或有新的 commit 推送到 PR 時觸發
+  pull_request:
+    types: [ opened, synchronize ] 
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Parent Repo Workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          # 1. 使用我們剛剛儲存的 PAT
+          token: ${{ secrets.PAT_FOR_DISPATCH }} 
+          
+          # 2. 你的「主 repo」名稱 (owner/repo)
+          repository: YOUR_OWNER/my-main-project
+          
+          # 3. 自定義事件名稱 (主 repo 會監聽這個)
+          event-type: test-child-pr
+          
+          # 4. 傳遞「指令」給主 repo (JSON payload)
+          # 這是關鍵：我們把 PR 的分支和 commit SHA 傳過去
+          client-payload: >
+            {
+              "pr_branch": "${{ github.head_ref }}",
+              "pr_sha": "${{ github.event.pull_request.head.sha }}"
+            }
