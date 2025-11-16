@@ -18,7 +18,7 @@ jobs:
           token: ${{ secrets.PAT_FOR_DISPATCH }} 
           
           # 2. 你的「主 repo」名稱 (owner/repo)
-          repository: YOUR_OWNER/my-main-project
+          repository: CNDI-final/Action_test
           
           # 3. 自定義事件名稱 (主 repo 會監聽這個)
           event-type: test-child-pr
